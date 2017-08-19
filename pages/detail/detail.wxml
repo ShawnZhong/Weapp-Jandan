@@ -1,0 +1,46 @@
+  <block>
+  <view class=".text" wx:if="{{ text!='' }}">
+    <text>{{text}}</text>
+  </view>
+    <view wx:for="{{pics}}" wx:for-index="id" wx:key="key">
+        <image src="{{item}}" class="image" mode="widthFix"/>
+    </view>
+
+    <view wx:if="{{hot_tucao.length!=0}}">
+      <text class="tag">热门评论</text>
+
+      <view class="comment" wx:for="{{hot_tucao}}" wx:for-index="id" wx:key="key">
+       <text class="author">{{item.comment_author}}</text>
+
+       <view class="vote">
+        <text class="vote-oo">OO {{item.vote_positive}}</text>
+        <text class="vote-xx">XX {{item.vote_negative}}</text>
+      </view>
+
+       <text class="date">{{item.comment_date}}</text>
+
+        <text class="context">{{item.comment_content}}</text>
+
+      </view>
+    </view>
+
+    <view>
+      <text class="tag">最新评论</text>
+    </view>
+    
+    <view wx:for="{{tucao}}" wx:for-index="id" wx:key="key">
+      <view class="comment">
+       <text class=".author">{{item.comment_author}}</text>
+
+       <view class=".vote">
+        <text class=".vote-oo">OO {{item.vote_positive}}</text>
+        <text class=".vote-xx">XX {{item.vote_negative}}</text>
+      </view>
+
+       <text class=".date">{{item.comment_date}}</text>
+
+        <text class=".context">{{item.comment_content}}</text>
+
+      </view>
+    </view>
+  </block>

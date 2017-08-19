@@ -1,130 +1,68 @@
-//index.js
-//获取应用实例
-var app = getApp()
+var API = require('../../utils/api.js');
 Page({
   data: {
     list: [],
-    userInfo: {},
-    toastHidden:true,
-    pageNum:1,
-    plain: false
+    pageNum: 1
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad () {
-    let that = this;
-    wx.request({
-      url: 'https://i.jandan.net/?oxwlxojflwblxbsapi=jandan.get_pic_comments&page='+that.data.pageNum,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success (res) {
-         that.setData({
-           header: '最新无聊图',
-           list: that.data.list.concat(res.data.comments)
-         })
-      }
-    })
-    this.index = 1
+  onLoad() {
+    wx.setNavigationBarTitle({ title: '首页' });
+    this.loadMore();
   },
-  loadMore:function(event){
-    let that = this;
-    that.data.pageNum++;
-    console.log(that.data.pageNum);
-    that.setData({ loading: true });
-    wx.request({
-      url: 'https://i.jandan.net/?oxwlxojflwblxbsapi=jandan.get_pic_comments&page='+that.data.pageNum,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success (res) {
-        console.log(that.data.list.length);
-        console.log(res.data.comments.length);
-        console.log("====");
-         that.setData({
-           loading: false,
-           header: '最新无聊图',
-           list: that.data.list.concat(res.data.comments)
-         })
-      }
-    })
+  onReachBottom: function () {
+    this.loadMore();
   },
-  clickPositive:function(event){
+  onPullDownRefresh: function () {
+    this.setData({ list: [], pageNum: 1 });
+    this.loadMore();
+  },
+  loadMore: function (event) {
     let that = this;
     wx.request({
-      url: 'https://i.jandan.net/index.php?acv_ajax=true&option=1',
-      header: {
-        'content-type':'application/x-www-form-urlencoded'
-      },
+      url: API.getPicURL(that.data.pageNum++),
+      success(res) {
+        that.setData({ 
+          list: that.data.list.concat(
+            res.data.comments.map(
+              s=> { s.text_content=s.text_content.trim() ;return s})
+            ) 
+          })
+        
+      }
+    });
+  },
+  vote: function (event) {
+    let that = this;
+    wx.request({
+      url: API.getVoteURL(),
       method: 'POST',
-      data:{
-        ID: event.target.dataset.postid
+      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: {
+        comment_id: event.target.dataset.postid,
+        like_type: event.target.dataset.vote,
+        data_type: 'comment'
       },
-      success (res) {
-        console.log(res.data.includes("THANK YOU"))
-        if (res.statusCode == 200) {
-          if(res.data.includes("THANK YOU")){
-              wx.showToast({
-                title: '投票成功',
-                icon: 'success',
-                duration: 2000
-              })
-          }else{
-              wx.showToast({
-                title: '已经投过票',
-                icon: 'loading',
-                duration: 1500
-              })
-          }
+      success(res) {
+        if (res.data.error == 0) {
+          wx.showToast({ title: '投票成功' });
+        } else {
+          wx.showToast({ title: '已经投过票', icon: 'loading' });
         }
-        else{
-          //something to do
-        }
-      },
-      fail: function (res) {
-        console.log(res);
       }
     })
   },
-  clickNegative:function(event){
-    let that = this;
-    wx.request({
-      url: 'https://i.jandan.net/index.php?acv_ajax=true&option=0',
-      header: {
-        'content-type':'application/x-www-form-urlencoded'
-      },
-      method: 'POST',
-      data:{
-        ID: event.target.dataset.postid
-      },
-      success (res) {
-        console.log(res.data.includes("THANK YOU"))
-        if (res.statusCode == 200) {
-          if(res.data.includes("THANK YOU")){
-              wx.showToast({
-                title: '投票成功',
-                icon: 'success',
-                duration: 2000
-              })
-          }else{
-              wx.showToast({
-                title: '已经投过票',
-                icon: 'loading',
-                duration: 1500
-              })
-          }
-        }
-        else{
-          //something to do
-        }
-      },
-      fail: function (res) {
-        console.log(res);
-      }
+  detail: function (event) {
+    wx.setStorage({
+      key: "item",
+      data: event.currentTarget.dataset.item
+    })
+    wx.navigateTo({
+      url: '../detail/detail?id=' + event.currentTarget.dataset.item.comment_ID
     })
   },
 })

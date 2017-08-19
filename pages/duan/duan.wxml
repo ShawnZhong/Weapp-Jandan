@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="news-item-container">
+    <block wx:for="{{list}}" wx:for-index="id" wx:key="key">   
+      <view class="news-item" >
+        <view>
+          <text class="news-item-subtitle">{{item.comment_author}}</text>
+        </view>
+        <view>
+          <text class="news-item-datetime">{{item.comment_date}}</text>
+        </view>
+        <view wx:if="{{ item.comment_content!='' }}" >
+          <text class="news-item-title">{{item.comment_content}}</text>
+        </view>
+        <view>
+          <text class="news-item-vote-positive-label" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='pos'> OO</text>
+          <text class="news-item-vote-positive"> [{{item.vote_positive}}] </text>
+          <text class="news-item-vote-negative-label" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='neg'> XX</text>
+          <text class="news-item-vote-negative"> [{{item.vote_negative}}] </text>
+        </view>
+      </view>
+    </block>
+    <button type="primary" class="load-btn"  loading="{{loading}}" plain="{{plain}}" bindtap="loadMore"> 更多 </button>
+  </view>
+</view>

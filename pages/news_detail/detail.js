@@ -12,7 +12,7 @@ Page({
     var WxParse = require('../../wxParse/wxParse.js');
     console.log("id:"+options.id);
     wx.request({
-      url: 'https://i.jandan.net/?oxwlxojflwblxbsapi=get_post&include=content,title&id=' + options.id,
+      url: 'https://jandan.net/?oxwlxojflwblxbsapi=get_post&include=content,title&id=' + options.id,
       headers: {
         'Content-Type': 'application/json'
       },

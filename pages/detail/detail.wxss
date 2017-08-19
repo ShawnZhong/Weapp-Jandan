@@ -1,0 +1,63 @@
+/**index.wxss**/
+
+.text{
+  line-height: 250%;
+  font-size: 14px;
+  padding: 16px;
+}
+
+.image{
+  width:100%;
+}
+
+.tag{
+  color: red;
+  height: 15px;
+  line-height: 250%;
+  width: 100%;
+  font-size: 14px;
+  padding: 16px;
+}
+
+.comment{
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top:0;
+  padding-bottom:0;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 14px;
+  line-height: 200%;
+}
+
+.context{
+  width: 100%;
+}
+
+.author{
+  font-size:13px;
+  font-weight: bold;
+}
+
+.vote{
+  display: inline;
+  position:absolute;
+  right:32px;
+  font-size: 12px;
+  color:gray;
+}
+.vote-xx{
+  padding-left: 5px;
+}
+
+.vote-oo{
+  padding-right: 5px;
+}
+
+.date{
+  color: gray;
+  font-size: 12px;
+  display:block;
+}
