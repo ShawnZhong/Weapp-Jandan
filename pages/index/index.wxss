@@ -69,24 +69,19 @@
   margin-top:8px;
 }
 
-.news-item-vote-positive-label{
+.news-item-vote-positive{
   color:#FFAAAA;
   font-weight: bold;
   font-size: 12px;
 }
 
-.news-item-vote-positive{
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.news-item-vote-negative-label{
+.news-item-vote-negative{
   color:#AAAAFF;
   font-weight: bold;
   font-size: 12px;
 }
 
-.news-item-vote-negative{
+.news-item-vote{
   font-weight: bold;
   font-size: 12px;
 }

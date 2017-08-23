@@ -16,10 +16,11 @@
           <image src="{{item}}" class="news-image" mode="aspectFit"/>
         </view>
         <view>
-          <text class="news-item-vote-positive-label" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='pos'> OO</text>
-          <text class="news-item-vote-positive"> [{{item.vote_positive}}] </text>
-          <text class="news-item-vote-negative-label" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='neg'> XX</text>
-          <text class="news-item-vote-negative"> [{{item.vote_negative}}] </text>
+          <text class="news-item-vote-positive" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='pos'> OO</text>
+          <text class="news-item-vote"> [{{item.vote_positive}}] </text>
+          <text class="news-item-vote-negative" catchtap="vote" data-postID='{{ item.comment_ID }}' data-vote='neg'> XX</text>
+          <text class="news-item-vote"> [{{item.vote_negative}}] </text>
+           <text class="news-item-vote">    吐槽 {{item.sub_comment_count}} </text>
         </view>
       </view>
     </block>
